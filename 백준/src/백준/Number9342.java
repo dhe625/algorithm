@@ -10,11 +10,11 @@ public class Number9342 {
 		int N = scanner.nextInt();
 		String arr[] = new String[N];
 		
-		Pattern p1 = Pattern.compile("[BCDEF]?");
+		Pattern p1 = Pattern.compile("[ABCDEF]?");
 		Pattern p2 = Pattern.compile("A+");
 		Pattern p3 = Pattern.compile("F+");
 		Pattern p4 = Pattern.compile("C+");
-		Pattern p5 = Pattern.compile("[ABDEF]?");
+		Pattern p5 = Pattern.compile("[ABCDEF]?");
 		
 		
 		for(int i=0; i<N; i++) {
