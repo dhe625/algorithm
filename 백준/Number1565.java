@@ -1,55 +1,83 @@
 package 백준;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Number1565 {
-	static int gcd(int a, int b) {
-		if(b==0)
-			return a;
+	static int gcd;
+	static int lcm;
+	
+	static int GCD(int m, int n) {
+		int tmp1;
 		
-		return gcd(b, a%b);
+		if(m<n) {
+			int tmp2 = m;
+			m = n;
+			n = tmp2;
+		}
+		
+		while(n!=0) {
+			tmp1 = m % n;
+			m = n;
+			n = tmp1;
+		}
+		return m;
 	}
-
-	static int lcm(int a, int b) {
-		return a*b / gcd(a,b);
+	
+	static int LCM(int m, int n) {
+		int gcd = GCD(m,n);
+		
+		int M = m / gcd;
+		int N = n / gcd;
+		
+		return M*N*gcd;
 	}
 	
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
+		ArrayList<Integer> list = new ArrayList<>();
+		int cnt = 0;
 		
-		int s1 = scanner.nextInt();
-		int s2 = scanner.nextInt();
+		int d = scanner.nextInt();
+		int m = scanner.nextInt();
 		
-		int[] D = new int[s1];
-		int[] M = new int[s2];
-		
-		for(int i=0; i<s1; i++) {
-			D[i] = scanner.nextInt();
-		}
-		
-		for(int i=0; i<s2; i++) {
-			M[i] = scanner.nextInt();
-		}
-		
-		int N1 = D[0]; int N2 = M[0];
-		
-		for(int i=0; i<s1; i++) {
-			N1 = lcm(N1,D[i]);
-		}
-		
-		for(int i=0; i<s2; i++) {
-			N2 = gcd(N2,M[i]);
-		}
-		
-		int result = 0;
-		
-		for(int i=N1; i<=N2; i+=N1) {
-			if(N2%i==0) {
-				result++;
+		for(int i=0; i<d; i++) {
+			int D = scanner.nextInt();
+			
+			if(i==0) {
+				lcm = D;
+			} else {
+				lcm = LCM(lcm,D);
 			}
 		}
 		
-		System.out.println(result);
+		for(int i=0; i<m; i++) {
+			int M = scanner.nextInt();
+			
+			if(i==0) {
+				gcd = M;
+			} else {
+				gcd = GCD(gcd,M);
+			}
+		}
+		
+		for(int i=1; i*i<=gcd; i++) {
+			if(gcd%i==0) {
+				if(i*i==gcd) {
+					list.add(i);
+				} else {
+					list.add(i);
+					list.add(gcd/i);
+				}
+			}
+		}
+		
+		for(Integer i : list) {
+			if(i%lcm==0)
+				cnt++;
+		}	
+		
+		System.out.println(cnt);
 		scanner.close();
 	}
 }
